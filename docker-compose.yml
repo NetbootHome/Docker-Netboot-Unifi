@@ -16,7 +16,7 @@ services:
       - MEM_STARTUP=1024 #optional
       - TZ=Europe/Paris
     labels:
-      # TRAEFIK CONFIG
+ # TRAEFIK CONFIG
       - "traefik.enable=true"
       - "traefik.docker.network=webgateway"
       # ROUTER AND SERVICE DEFINITION
@@ -25,9 +25,9 @@ services:
       - "traefik.http.routers.unifi.service=unifi"
       - "traefik.http.routers.unifi.rule=Host(`unifi.netboot.fr`)"
       - "traefik.http.routers.unifi.tls.certresolver=letsencrypt"
-      - "traefik.http.services.unifi.loadbalancer.server.port=8843"
+      - "traefik.http.services.unifi.loadbalancer.server.port=8443"
       - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
-      # ROUTER AND SERVICE DEFINITION
+      # DEVICE MANAGEMENT
       - "traefik.http.routers.unifi-device.entryPoints=websecure"
       - "traefik.http.routers.unifi-device.tls=true"
       - "traefik.http.routers.unifi-device.service=unifi-device"
