@@ -44,6 +44,7 @@ services:
       - "traefik.http.middlewares.unifi.headers.STSIncludeSubdomains=true"
       - "traefik.http.middlewares.unifi.headers.STSPreload=true"
       - "traefik.http.middlewares.unifi.headers.frameDeny=true"
+      - "traefik.http.middlewares.unifi.headers.accessControlAllowCredentials=true"
     restart: always
     
 networks:
