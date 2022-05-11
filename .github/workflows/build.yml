@@ -1,0 +1,20 @@
+name: Build
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'
+  schedule:
+    - cron: '0 5 * * *'
+jobs:
+  build:
+    runs-on: [azure]
+    steps:
+      - name: Checking out the repository
+        uses: actions/checkout@v3
+      - name: Stop Containers
+        run: "sudo /usr/local/bin/docker-compose -p unifi stop"
+      - name: Start Containers
+        run: "sudo /usr/local/bin/docker-compose -p unifi up -d --build"
