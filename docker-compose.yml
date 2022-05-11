@@ -16,7 +16,7 @@ services:
       - MEM_STARTUP=1024 #optional
       - TZ=Europe/Paris
     labels:
- # TRAEFIK CONFIG
+      # TRAEFIK CONFIG
       - "traefik.enable=true"
       - "traefik.docker.network=webgateway"
       # ROUTER AND SERVICE DEFINITION
