@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+
+  netboot_service:
+    build: docker/service
+    volumes:
+      - /docker/data/netboot/unifi/data:/config
+    networks:
+      webgateway: {}
+      default: {}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MEM_LIMIT=1024 #optional
+      - MEM_STARTUP=1024 #optional
+      - TZ=Europe/Paris
+    labels:
+      # TRAEFIK CONFIG
+      - "traefik.enable=true"
+      - "traefik.docker.network=webgateway"
+      # ROUTER AND SERVICE DEFINITION
+      - "traefik.http.routers.unifi.entryPoints=websecure"
+      - "traefik.http.routers.unifi.tls=true"
+      - "traefik.http.routers.unifi.service=unifi"
+      - "traefik.http.routers.unifi.rule=Host(`unifi.netboot.fr`)"
+      - "traefik.http.routers.unifi.tls.certresolver=letsencrypt"
+      - "traefik.http.services.unifi.loadbalancer.server.port=8843"
+      - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
+      # ROUTER AND SERVICE DEFINITION
+      - "traefik.http.routers.unifi-device.entryPoints=websecure"
+      - "traefik.http.routers.unifi-device.tls=true"
+      - "traefik.http.routers.unifi-device.service=unifi-device"
+      - "traefik.http.routers.unifi-device.rule=Host(`unifi.netboot.fr`) && Path(`/device`)"
+      - "traefik.http.routers.unifi-device.tls.certresolver=letsencrypt"
+      - "traefik.http.services.unifi-device.loadbalancer.server.port=8080"
+      - "traefik.http.services.unifi-device.loadbalancer.server.scheme=http"
+      # HTTPS HEADERS
+      - "traefik.http.middlewares.unifi.headers.SSLRedirect=true"
+      - "traefik.http.middlewares.unifi.headers.STSSeconds=315360000"
+      - "traefik.http.middlewares.unifi.headers.browserXSSFilter=true"
+      - "traefik.http.middlewares.unifi.headers.contentTypeNosniff=true"
+      - "traefik.http.middlewares.unifi.headers.forceSTSHeader=true"
+      - "traefik.http.middlewares.unifi.headers.STSIncludeSubdomains=true"
+      - "traefik.http.middlewares.unifi.headers.STSPreload=true"
+      - "traefik.http.middlewares.unifi.headers.frameDeny=true"
+    restart: always
+    
+networks:
+  webgateway:
+    external: true
