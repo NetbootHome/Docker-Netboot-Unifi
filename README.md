@@ -1,4 +1,4 @@
-# Netboot - Unifi [![Build](https://github.com/NetbootHome/Docker-Netboot-Unifi/actions/workflows/build.yml/badge.svg)](https://github.com/NetbootHome/Docker-Netboot-Unifi/actions/workflows/build.yml)
+# Netboot - Unifi Controller [![Build](https://github.com/NetbootHome/Docker-Netboot-Unifi/actions/workflows/build.yml/badge.svg)](https://github.com/NetbootHome/Docker-Netboot-Unifi/actions/workflows/build.yml)
 
 ## Please show the value
 
