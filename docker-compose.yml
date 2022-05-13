@@ -45,6 +45,11 @@ services:
       - "traefik.http.middlewares.unifi.headers.STSPreload=true"
       - "traefik.http.middlewares.unifi.headers.frameDeny=true"
       - "traefik.http.middlewares.unifi.headers.accessControlAllowCredentials=true"
+    healthcheck:
+      test: ["CMD", "curl", "-kILs", "--fail", "https://localhost:8443"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: always
     
 networks:
