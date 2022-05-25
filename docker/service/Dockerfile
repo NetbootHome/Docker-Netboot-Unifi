@@ -1,1 +1,1 @@
-FROM linuxserver/unifi-controller:7.1.65
+FROM linuxserver/unifi-controller:7.1.66
