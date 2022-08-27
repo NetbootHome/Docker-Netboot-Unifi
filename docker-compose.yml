@@ -6,6 +6,8 @@ services:
     build: docker/service
     volumes:
       - /docker/data/netboot/unifi/data:/config
+    ports:
+      - 3478:3478/udp
     networks:
       webgateway: {}
       default: {}
@@ -25,14 +27,14 @@ services:
       - "traefik.http.routers.unifi.service=unifi"
       - "traefik.http.routers.unifi.rule=Host(`unifi.netboot.fr`)"
       - "traefik.http.routers.unifi.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.unifi.middlewares=redirect-to-https@docker"
       - "traefik.http.services.unifi.loadbalancer.server.port=8443"
       - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
       # DEVICE MANAGEMENT
-      - "traefik.http.routers.unifi-device.entryPoints=websecure"
-      - "traefik.http.routers.unifi-device.tls=true"
+      - "traefik.http.routers.unifi-device.entryPoints=web"
+      - "traefik.http.routers.unifi-device.tls=false"
       - "traefik.http.routers.unifi-device.service=unifi-device"
-      - "traefik.http.routers.unifi-device.rule=Host(`unifi.netboot.fr`) && Path(`/device`)"
-      - "traefik.http.routers.unifi-device.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.unifi-device.rule=Host(`unifidevice.netboot.fr`)"
       - "traefik.http.services.unifi-device.loadbalancer.server.port=8080"
       - "traefik.http.services.unifi-device.loadbalancer.server.scheme=http"
       # HTTPS HEADERS
