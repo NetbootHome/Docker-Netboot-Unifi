@@ -13,7 +13,7 @@ jobs:
     runs-on: [azure]
     steps:
       - name: Checking out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Stop Containers
         run: "sudo /usr/local/bin/docker-compose -p unifi stop"
       - name: Start Containers
